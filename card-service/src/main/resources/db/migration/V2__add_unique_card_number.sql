@@ -1,0 +1,1 @@
+ALTER TABLE cards ADD CONSTRAINT unique_card_number UNIQUE (card_number);

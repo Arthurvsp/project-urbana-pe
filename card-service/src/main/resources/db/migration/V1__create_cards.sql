@@ -1,0 +1,8 @@
+CREATE TABLE cards (
+    id BIGSERIAL PRIMARY KEY,
+    card_number BIGINT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    status BOOLEAN NOT NULL DEFAULT TRUE,
+    card_type VARCHAR(50) NOT NULL,
+    user_id BIGINT NOT NULL
+);
