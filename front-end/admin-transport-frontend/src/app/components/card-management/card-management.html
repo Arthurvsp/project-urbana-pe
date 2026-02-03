@@ -1,30 +1,20 @@
+<!-- card-management.html (atualizado com classes Tailwind para melhorar a aparência) -->
 <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
   <!-- Top Navigation -->
-  <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1a202c] px-4 md:px-10 py-3 sticky top-0 z-50">
+  <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 bg-white px-4 md:px-10 py-3 sticky top-0 z-50">
     <div class="flex items-center gap-8">
-      <div class="flex items-center gap-4 text-slate-900 dark:text-white">
+      <div class="flex items-center gap-4 text-slate-900">
         <div class="size-8 rounded bg-primary flex items-center justify-center text-white">
           <span class="material-symbols-outlined">directions_bus</span>
         </div>
         <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] hidden md:block">Transport Admin</h2>
       </div>
       <div class="hidden md:flex items-center gap-9">
-        <a class="text-slate-900 dark:text-slate-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
         <a class="text-primary text-sm font-bold leading-normal" href="#">Usuários</a>
-        <a class="text-slate-900 dark:text-slate-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Relatórios</a>
-        <a class="text-slate-900 dark:text-slate-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Configurações</a>
       </div>
     </div>
     <div class="flex flex-1 justify-end gap-4 md:gap-8 items-center">
-      <label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
-        <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
-          <div class="text-slate-500 dark:text-slate-400 flex border-none bg-slate-100 dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg border-r-0">
-            <span class="material-symbols-outlined text-[20px]">search</span>
-          </div>
-          <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-slate-100 dark:bg-slate-800 focus:border-none h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Buscar usuário..." />
-        </div>
-      </label>
-      <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-white dark:border-slate-700 shadow-sm" [style.background-image]="'ur[](https://placeholder.com/40x40)'"></div>
+      <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-white shadow-sm" [style.background-image]="'ur '"></div>
     </div>
   </header>
   <div class="layout-container flex h-full grow flex-col">
@@ -33,12 +23,12 @@
         <!-- Page Heading & Actions -->
         <div class="flex flex-col md:flex-row justify-between gap-6 p-4 items-start md:items-end">
           <div class="flex min-w-72 flex-col gap-3">
-            <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm mb-1">
+            <div class="flex items-center gap-2 text-slate-500 text-sm mb-1">
               <span class="material-symbols-outlined text-[16px]">arrow_back</span>
               <a class="hover:underline" (click)="router.navigate(['/users'])">Voltar para Lista</a>
             </div>
-            <p class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Detalhes do Usuário</p>
-            <p class="text-slate-500 dark:text-slate-400 text-base font-normal leading-normal">Gerencie as informações pessoais e os cartões de transporte vinculados.</p>
+            <p class="text-slate-900 text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Detalhes do Usuário</p>
+            <p class="text-slate-500 text-base font-normal leading-normal">Gerencie as informações pessoais e os cartões de transporte vinculados.</p>
           </div>
           <button (click)="saveChanges()" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary hover:bg-blue-700 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em] shadow-lg shadow-blue-500/20">
             <span class="truncate">Salvar Alterações</span>
@@ -46,71 +36,74 @@
         </div>
         <!-- User Details Grid -->
         <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-          <div class="flex flex-col gap-1 border-t border-solid border-slate-200 dark:border-slate-700 py-4">
-            <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Nome Completo</p>
-            <p class="text-slate-900 dark:text-white text-base font-medium leading-normal">{{ user?.name }}</p>
+          <div class="flex flex-col gap-1 border-t border-solid border-slate-200 py-4">
+            <p class="text-slate-500 text-sm font-normal leading-normal">Nome Completo</p>
+            <p class="text-slate-900 text-base font-medium leading-normal">{{ user?.name }}</p>
           </div>
-          <div class="flex flex-col gap-1 border-t border-solid border-slate-200 dark:border-slate-700 py-4">
-            <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Email</p>
-            <p class="text-slate-900 dark:text-white text-base font-medium leading-normal">{{ user?.email }}</p>
+          <div class="flex flex-col gap-1 border-t border-solid border-slate-200 py-4">
+            <p class="text-slate-500 text-sm font-normal leading-normal">Email</p>
+            <p class="text-slate-900 text-base font-medium leading-normal">{{ user?.email }}</p>
           </div>
           <!-- Adicione mais campos se necessário, ex: CPF, Status -->
         </div>
         <!-- Cards Section Header -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 pb-3 pt-8 gap-4">
-          <h2 class="text-slate-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Cartões Cadastrados</h2>
-          <button (click)="addNewCard()" class="flex items-center justify-center gap-2 rounded-lg h-9 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-primary text-sm font-bold leading-normal transition-colors border border-transparent hover:border-slate-300 dark:hover:border-slate-600">
+          <h2 class="text-slate-900 text-[22px] font-bold leading-tight tracking-[-0.015em]">Cartões Cadastrados</h2>
+          <button (click)="toggleNewCardForm()" class="flex items-center justify-center gap-2 rounded-lg h-9 px-4 bg-slate-100 hover:bg-slate-200 text-primary text-sm font-bold leading-normal transition-colors border border-transparent hover:border-slate-300">
             <span class="material-symbols-outlined text-[18px]">add_card</span>
             <span class="truncate">Adicionar Novo Cartão</span>
           </button>
         </div>
-        <!-- Form para Novo Cartão (simples, ajuste se precisar de form group) -->
-        <div class="p-4 flex flex-col gap-4">
-          <input [(ngModel)]="newCard.cardNumber" type="number" placeholder="Número do Cartão" class="form-input ..." />
-          <input [(ngModel)]="newCard.name" type="text" placeholder="Nome no Cartão" class="form-input ..." />
-          <select [(ngModel)]="newCard.cardType" class="form-select ...">
+        <!-- Form para Novo Cartão (agora com estilos melhorados via Tailwind) -->
+        <div *ngIf="showNewCardForm" class="p-4 flex flex-col gap-4 bg-white rounded-lg shadow-md border border-slate-200">
+          <input [(ngModel)]="newCard.cardNumber" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Número do Cartão" class="w-full px-4 py-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm placeholder:text-slate-400 shadow-sm" />
+          <input [(ngModel)]="newCard.name" type="text" placeholder="Nome no Cartão" class="w-full px-4 py-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm placeholder:text-slate-400 shadow-sm" />
+          <select [(ngModel)]="newCard.cardType" class="w-full px-4 py-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm bg-white appearance-none shadow-sm">
             <option value="COMUM">COMUM</option>
             <option value="ESTUDANTE">ESTUDANTE</option>
             <option value="TRABALHADOR">TRABALHADOR</option>
           </select>
-          <button (click)="addNewCard()" class="bg-primary text-white ...">Adicionar</button>
+          <button (click)="addNewCard()" class="w-full px-4 py-3 bg-primary text-white rounded-md hover:bg-blue-600 transition-all font-medium text-sm shadow-md flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">add</span>
+            Adicionar
+          </button>
         </div>
         <!-- Cards Table -->
         <div class="px-4 py-3">
-          <div class="flex overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1a202c] shadow-sm">
+          <div class="flex overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             <table class="flex-1 w-full text-left border-collapse">
               <thead>
-                <tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
-                  <th class="px-6 py-4 text-slate-900 dark:text-white text-xs font-semibold uppercase tracking-wider w-[20%]">Número</th>
-                  <th class="px-6 py-4 text-slate-900 dark:text-white text-xs font-semibold uppercase tracking-wider w-[30%]">Nome do Cartão</th>
-                  <th class="px-6 py-4 text-slate-900 dark:text-white text-xs font-semibold uppercase tracking-wider w-[20%]">Tipo</th>
-                  <th class="px-6 py-4 text-slate-900 dark:text-white text-xs font-semibold uppercase tracking-wider w-[15%]">Status</th>
-                  <th class="px-6 py-4 text-slate-900 dark:text-white text-xs font-semibold uppercase tracking-wider w-[15%] text-right">Ações</th>
+                <tr class="bg-slate-50 border-b border-slate-200">
+                  <th class="px-6 py-4 text-slate-900 text-xs font-semibold uppercase tracking-wider w-[20%]">Número</th>
+                  <th class="px-6 py-4 text-slate-900 text-xs font-semibold uppercase tracking-wider w-[30%]">Nome do Cartão</th>
+                  <th class="px-6 py-4 text-slate-900 text-xs font-semibold uppercase tracking-wider w-[20%]">Tipo</th>
+                  <th class="px-6 py-4 text-slate-900 text-xs font-semibold uppercase tracking-wider w-[15%]">Status</th>
+                  <th class="px-6 py-4 text-slate-900 text-xs font-semibold uppercase tracking-wider w-[15%] text-right">Ações</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
-                <tr *ngFor="let card of cards" class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+              <tbody class="divide-y divide-slate-200">
+                <tr *ngFor="let card of cards" class="hover:bg-slate-50 transition-colors">
                   <td class="px-6 py-4">
                     <div class="flex items-center gap-3">
-                      <div class="size-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary">
+                      <div class="size-8 rounded-full bg-blue-100 flex items-center justify-center text-primary">
                         <span class="material-symbols-outlined text-[18px]">credit_card</span>
                       </div>
-                      <span class="text-slate-600 dark:text-slate-300 text-sm font-medium font-mono">{{ card.cardNumber }}</span>
+                      <span class="text-slate-600 text-sm font-medium font-mono">{{ card.cardNumber }}</span>
                     </div>
                   </td>
-                  <td class="px-6 py-4 text-slate-900 dark:text-white text-sm font-medium">{{ card.name }}</td>
+                  <td class="px-6 py-4 text-slate-900 text-sm font-medium">{{ card.name }}</td>
                   <td class="px-6 py-4">
                     <span [ngClass]="{'bg-slate-100 text-slate-600': card.cardType === 'COMUM', 'bg-green-50 text-green-700': card.cardType === 'ESTUDANTE', 'bg-amber-50 text-amber-700': card.cardType === 'TRABALHADOR'}" class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ring-slate-500/10">
                       {{ card.cardType }}
                     </span>
                   </td>
                   <td class="px-6 py-4">
-                    <button (click)="toggleStatus(card)" [attr.aria-checked]="card.status" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" [ngClass]="{'bg-primary': card.status, 'bg-slate-200 dark:bg-slate-600': !card.status}">
+                    <button (click)="toggleStatus(card)" [attr.aria-checked]="card.status" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" [ngClass]="{'bg-primary': card.status, 'bg-slate-200': !card.status}">
                       <span [ngClass]="{'translate-x-5': card.status, 'translate-x-0': !card.status}" aria-hidden="true" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
                     </button>
                   </td>
                   <td class="px-6 py-4 text-right">
-                    <button (click)="removeCard(card.cardNumber)" class="text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20" title="Remover Cartão">
+                    <button (click)="removeCard(card.cardNumber)" class="text-slate-400 hover:text-red-600 transition-colors p-2 rounded-full hover:bg-red-50" title="Remover Cartão">
                       <span class="material-symbols-outlined text-[20px]">delete</span>
                     </button>
                   </td>

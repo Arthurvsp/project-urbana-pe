@@ -23,6 +23,7 @@ export class CardManagementComponent implements OnInit {
   user: any;
   cards: any[] = [];
   newCard: any = { cardNumber: null, name: '', status: true, cardType: 'COMUM', userId: null };
+  showNewCardForm = false; 
 
   constructor() {
     this.userId = +this.route.snapshot.paramMap.get('id')!;
@@ -46,10 +47,15 @@ export class CardManagementComponent implements OnInit {
     });
   }
 
+  toggleNewCardForm(): void { 
+    this.showNewCardForm = !this.showNewCardForm;
+  }
+
   addNewCard(): void {
     this.cardService.addCard(this.newCard).subscribe(() => {
       this.loadCards();
       this.newCard = { cardNumber: null, name: '', status: true, cardType: 'COMUM', userId: this.userId };
+      this.showNewCardForm = false;  
     });
   }
 

@@ -1,89 +1,68 @@
-<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden font-display">
+<!-- user-list.html (removidas classes dark:*) -->
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light group/design-root overflow-x-hidden font-display">
   <div class="layout-container flex h-full grow flex-col">
-    <!-- Top Navigation Bar -->
-    <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f2f4] dark:border-b-[#2a3441] bg-white dark:bg-[#1a202c] px-10 py-3 shadow-sm z-10">
-      <div class="flex items-center gap-4 text-[#111318] dark:text-white">
+    <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f2f4] bg-white px-10 py-3 shadow-sm z-10">
+      <div class="flex items-center gap-4 text-[#111318]">
         <div class="size-8 flex items-center justify-center rounded-lg bg-primary/10 text-primary">
           <span class="material-symbols-outlined text-2xl">directions_bus</span>
         </div>
-        <h2 class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Admin Transportes</h2>
+        <h2 class="text-[#111318] text-lg font-bold leading-tight tracking-[-0.015em]">Cartões de Transporte</h2>
       </div>
       <div class="flex flex-1 justify-end gap-8">
         <nav class="hidden md:flex items-center gap-9">
-          <a class="text-[#111318] dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
           <a class="text-primary text-sm font-bold leading-normal" href="#">Usuários</a>
-          <a class="text-[#111318] dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Relatórios</a>
-          <a class="text-[#111318] dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Configurações</a>
         </nav>
         <div class="flex items-center gap-4">
-          <button class="text-[#111318] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full p-2">
-            <span class="material-symbols-outlined">notifications</span>
-          </button>
           <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" [style.background-image]="'ur[](https://lh3.googleusercontent.com/aida-public/AB6AXuCmojTMHtlsgmy_120jR9sB60k26UpqNPgcmNfc55vE0HYTfRYsEUI_HMMY2ict3Zeqc6Qz-yY3eYq32B6_6FWlvzKdswSe3LFniQiZL9KCe5OjTl3clDoFkKTlTnQn2mlIaeEGJFpSrxnB3c4y0IZG0D9IcnV3x4_hlNCjyYOewbulkAvP6UJ4pU5U6AxPWSbeVIn4rSRmsLCM2IAOQq9RwKnxv3DWBwiju0XVKQAE_voC2kAmPbkqtiWKncAua6gipyH3c2xGm9yO)'"></div>
         </div>
       </div>
     </header>
     <main class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-8">
       <div class="layout-content-container flex flex-col w-full max-w-[1200px] flex-1 gap-6">
-        <!-- Page Heading & Actions -->
-        <div class="flex flex-col md:flex-row justify-between gap-6 p-4 bg-white dark:bg-[#1a202c] rounded-xl shadow-sm border border-[#e5e7eb] dark:border-[#2d3748]">
+        <div class="flex flex-col md:flex-row justify-between gap-6 p-4 bg-white rounded-xl shadow-sm border border-[#e5e7eb]">
           <div class="flex min-w-72 flex-col gap-2">
-            <h1 class="text-[#111318] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Gestão de Usuários</h1>
-            <p class="text-[#616f89] dark:text-gray-400 text-base font-normal leading-normal">Gerencie os usuários e seus cartões de transporte associados</p>
+            <h1 class="text-[#111318] text-3xl font-black leading-tight tracking-[-0.033em]">Gestão de Usuários</h1>
+            <p class="text-[#616f89] text-base font-normal leading-normal">Gerencie os usuários e seus cartões de transporte associados</p>
           </div>
           <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-            <!-- Search Field -->
             <div class="relative flex w-full sm:w-80 items-stretch rounded-lg">
-              <input [(ngModel)]="searchTerm" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111318] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-[#dbdfe6] dark:border-[#4a5568] bg-white dark:bg-[#2d3748] focus:border-primary h-10 placeholder:text-[#616f89] dark:placeholder:text-gray-500 pl-4 pr-10 text-sm font-normal leading-normal transition-all" placeholder="Buscar por nome ou email" />
-              <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#616f89] dark:text-gray-400 flex items-center justify-center pointer-events-none">
+              <input [(ngModel)]="searchTerm" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111318] focus:outline-0 focus:ring-2 focus:ring-primary border border-[#dbdfe6] bg-white focus:border-primary h-10 placeholder:text-[#616f89] pl-4 pr-10 text-sm font-normal leading-normal transition-all" placeholder="Buscar por nome ou email" />
+              <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#616f89] flex items-center justify-center pointer-events-none">
                 <span class="material-symbols-outlined text-[20px]">search</span>
               </div>
             </div>
-            <!-- New User Button -->
             <button (click)="newUser()" class="flex min-w-[140px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-primary/90 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors shadow-sm">
               <span class="material-symbols-outlined text-[20px]">add</span>
               <span class="truncate">Novo Usuário</span>
             </button>
           </div>
         </div>
-        <!-- Filters / Status Tabs (Optional Context) -->
         <div class="flex gap-2 overflow-x-auto pb-2">
           <button class="px-4 py-2 rounded-full bg-primary text-white text-sm font-medium whitespace-nowrap">Todos os Usuários</button>
-          <button class="px-4 py-2 rounded-full bg-white dark:bg-[#1a202c] text-[#616f89] dark:text-gray-400 border border-[#e5e7eb] dark:border-[#2d3748] hover:bg-gray-50 dark:hover:bg-[#2d3748] text-sm font-medium whitespace-nowrap transition-colors">Ativos</button>
-          <button class="px-4 py-2 rounded-full bg-white dark:bg-[#1a202c] text-[#616f89] dark:text-gray-400 border border-[#e5e7eb] dark:border-[#2d3748] hover:bg-gray-50 dark:hover:bg-[#2d3748] text-sm font-medium whitespace-nowrap transition-colors">Pendentes</button>
-          <button class="px-4 py-2 rounded-full bg-white dark:bg-[#1a202c] text-[#616f89] dark:text-gray-400 border border-[#e5e7eb] dark:border-[#2d3748] hover:bg-gray-50 dark:hover:bg-[#2d3748] text-sm font-medium whitespace-nowrap transition-colors">Bloqueados</button>
         </div>
-        <!-- Main Table -->
-        <div class="flex flex-col overflow-hidden rounded-xl border border-[#dbdfe6] dark:border-[#2d3748] bg-white dark:bg-[#1a202c] shadow-sm">
+        <div class="flex flex-col overflow-hidden rounded-xl border border-[#dbdfe6] bg-white shadow-sm">
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
               <thead>
-                <tr class="bg-[#f8f9fa] dark:bg-[#2d3748] border-b border-[#dbdfe6] dark:border-[#4a5568]">
-                  <th class="px-6 py-4 text-[#616f89] dark:text-gray-300 text-xs font-bold uppercase tracking-wider">Usuário</th>
-                  <th class="px-6 py-4 text-[#616f89] dark:text-gray-300 text-xs font-bold uppercase tracking-wider">Status</th>
-                  <th class="px-6 py-4 text-[#616f89] dark:text-gray-300 text-xs font-bold uppercase tracking-wider">Cartões</th>
-                  <th class="px-6 py-4 text-[#616f89] dark:text-gray-300 text-xs font-bold uppercase tracking-wider text-right">Ações</th>
+                <tr class="bg-[#f8f9fa] border-b border-[#dbdfe6]">
+                  <th class="px-6 py-4 text-[#616f89] text-xs font-bold uppercase tracking-wider">Usuário</th>
+                  <th class="px-6 py-4 text-[#616f89] text-xs font-bold uppercase tracking-wider">Cartões</th>
+                  <th class="px-6 py-4 text-[#616f89] text-xs font-bold uppercase tracking-wider text-right">Ações</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-[#dbdfe6] dark:divide-[#4a5568]">
-                <tr *ngFor="let user of filterUsers()" class="group hover:bg-[#f8f9fa] dark:hover:bg-[#2d3748] transition-colors">
+              <tbody class="divide-y divide-[#dbdfe6]">
+                <tr *ngFor="let user of filterUsers()" class="group hover:bg-[#f8f9fa] transition-colors">
                   <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center gap-3">
                       <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" [style.background-image]="'url(' + (user.profileImage || 'https://placeholder.com/40x40') + ')'"></div>
                       <div class="flex flex-col">
-                        <span class="text-[#111318] dark:text-white text-sm font-bold">{{ user.name }}</span>
-                        <span class="text-[#616f89] dark:text-gray-400 text-sm">{{ user.email }}</span>
+                        <span class="text-[#111318] text-sm font-bold">{{ user.name }}</span>
+                        <span class="text-[#616f89] text-sm">{{ user.email }}</span>
                       </div>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span [ngClass]="{'bg-green-100 text-green-700': user.status === true, 'bg-red-100 text-red-800': user.status === false}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium">
-                      <span [ngClass]="{'bg-green-500': user.status === true, 'bg-red-500': user.status === false}" class="size-1.5 rounded-full"></span>
-                      {{ user.status === true ? 'Ativo' : 'Bloqueado' }}
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="text-[#111318] dark:text-gray-200 text-sm font-medium">{{ user.cards?.length || 0 }} Cartões</span>
+                    <span class="text-[#111318] text-sm font-medium">{{ user.cards?.length || 0 }} Cartões</span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right">
                     <div class="flex items-center justify-end gap-2">
@@ -91,10 +70,10 @@
                         <span class="material-symbols-outlined text-[16px]">credit_card</span>
                         Gerenciar Cartões
                       </button>
-                      <button (click)="editUser(user.id)" class="p-1.5 rounded-lg text-gray-500 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" title="Editar">
+                      <button (click)="editUser(user.id)" class="p-1.5 rounded-lg text-gray-500 hover:text-primary hover:bg-gray-100 transition-colors" title="Editar">
                         <span class="material-symbols-outlined text-[20px]">edit</span>
                       </button>
-                      <button (click)="deleteUser(user.id)" class="p-1.5 rounded-lg text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Excluir">
+                      <button (click)="deleteUser(user.id)" class="p-1.5 rounded-lg text-gray-500 hover:text-red-600 hover:bg-red-50 transition-colors" title="Excluir">
                         <span class="material-symbols-outlined text-[20px]">delete</span>
                       </button>
                     </div>
@@ -104,12 +83,10 @@
             </table>
           </div>
         </div>
-        <!-- Pagination (simples, ajuste se precisar de lib) -->
-        <div class="flex items-center justify-between p-4 bg-white dark:bg-[#1a202c] rounded-xl border border-[#dbdfe6] dark:border-[#2d3748] shadow-sm">
-          <div class="text-sm text-[#616f89] dark:text-gray-400 hidden sm:block">
+        <div class="flex items-center justify-between p-4 bg-white rounded-xl border border-[#dbdfe6] shadow-sm">
+          <div class="text-sm text-[#616f89] hidden sm:block">
             Mostrando <strong>1-{{ filterUsers().length }}</strong> de <strong>{{ users.length }}</strong> usuários
           </div>
-          <!-- Adicione botões de paginação se necessário -->
         </div>
       </div>
     </main>

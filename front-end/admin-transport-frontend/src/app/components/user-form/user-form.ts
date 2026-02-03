@@ -1,3 +1,4 @@
+// user-form.ts (adicionado Validators.required para password no create, e roles default)
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -27,8 +28,8 @@ export class UserFormComponent implements OnInit {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.minLength(8)],
-      roles: [[]] // Ajuste se necessário
+      password: ['', [Validators.minLength(8)]],  // ← Required será adicionado dinamicamente no ngOnInit
+      roles: [['USER']]  // ← Default para novo usuário
     });
   }
 
@@ -37,6 +38,10 @@ export class UserFormComponent implements OnInit {
     if (this.userId) {
       this.isEdit = true;
       this.loadUser();
+    } else {
+      // Para create, tornar password required
+      this.userForm.get('password')?.addValidators(Validators.required);
+      this.userForm.get('password')?.updateValueAndValidity();
     }
   }
 
@@ -50,6 +55,10 @@ export class UserFormComponent implements OnInit {
     if (this.userForm.valid) {
       const userData = this.userForm.value;
       if (this.isEdit) {
+        // Para update, remover password se vazio
+        if (!userData.password) {
+          delete userData.password;
+        }
         this.userService.updateUser(this.userId!, userData).subscribe(() => {
           this.router.navigate(['/users']);
         });
@@ -58,6 +67,8 @@ export class UserFormComponent implements OnInit {
           this.router.navigate(['/users']);
         });
       }
+    } else {
+      console.log('Form inválido:', this.userForm.errors);  // ← Para debug, remova depois
     }
   }
 
