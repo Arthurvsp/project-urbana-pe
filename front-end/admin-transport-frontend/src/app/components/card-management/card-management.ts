@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,6 +21,8 @@ export class CardManagementComponent implements OnInit {
   private cardService = inject(CardService);
   public router = inject(Router);
   private keycloak = inject(KeycloakService);
+  private cdr = inject(ChangeDetectorRef);
+
   userId: number;
   user: any;
   cards: any[] = [];
@@ -40,17 +42,20 @@ export class CardManagementComponent implements OnInit {
   loadUser(): void {
     this.userService.getUserById(this.userId).subscribe(user => {
       this.user = user;
+      this.cdr.detectChanges();
     });
   }
 
   loadCards(): void {
     this.cardService.getCardsByUserId(this.userId).subscribe(cards => {
       this.cards = cards;
+      this.cdr.detectChanges();
     });
   }
 
   toggleNewCardForm(): void { 
     this.showNewCardForm = !this.showNewCardForm;
+    this.cdr.detectChanges();
   }
 
   addNewCard(): void {
@@ -58,13 +63,17 @@ export class CardManagementComponent implements OnInit {
       this.loadCards();
       this.newCard = { cardNumber: null, name: '', status: true, cardType: 'COMUM', userId: this.userId };
       this.showNewCardForm = false;  
+      this.cdr.detectChanges();
     });
   }
 
   toggleStatus(card: any): void {
     this.cardService.toggleCardStatus(card.cardNumber).subscribe(updatedCard => {
       const index = this.cards.findIndex(c => c.id === updatedCard.id);
-      this.cards[index] = updatedCard;
+      if (index !== -1) {
+        this.cards[index] = updatedCard;
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -76,7 +85,7 @@ export class CardManagementComponent implements OnInit {
     }
   }
 
-  saveChanges(): void {
+  goToUsers(): void {
     this.router.navigate(['/users']);
   }
 

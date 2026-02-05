@@ -2,8 +2,8 @@
   <div class="layout-container flex h-full grow flex-col">
     <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f2f4] bg-white px-10 py-3 shadow-sm z-10">
       <div class="flex items-center gap-4 text-[#111318]">
-        <div class="size-8 flex items-center justify-center rounded-lg bg-primary/10 text-primary">
-          <span class="material-symbols-outlined text-2xl">directions_bus</span>
+        <div class="size-8 rounded bg-primary flex items-center justify-center text-white">
+          <span class="material-symbols-outlined">directions_bus</span>
         </div>
         <h2 class="text-[#111318] text-lg font-bold leading-tight tracking-[-0.015em]">Cartões de Transporte</h2>
       </div>
@@ -15,9 +15,6 @@
           <button (click)="logout()" class="flex items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]">
             <span class="truncate">Logout</span>
           </button>
-          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" 
-               [style.background-image]="'ur[](https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=150)'">
-          </div>
         </div>
       </div>
     </header>
@@ -25,7 +22,6 @@
     <main class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-8">
       <div class="layout-content-container flex flex-col w-full max-w-[1200px] flex-1 gap-6">
 
-        <!-- Cabeçalho + busca + botão novo -->
         <div class="flex flex-col md:flex-row justify-between gap-6 p-4 bg-white rounded-xl shadow-sm border border-[#e5e7eb]">
           <div class="flex min-w-72 flex-col gap-2">
             <h1 class="text-[#111318] text-3xl font-black leading-tight tracking-[-0.033em]">Gestão de Usuários</h1>
@@ -49,21 +45,18 @@
           </div>
         </div>
 
-        <!-- Loading -->
         <ng-container *ngIf="users.length === 0">
           <div class="p-8 text-center text-gray-500 bg-white rounded-xl border border-[#e5e7eb]">
             Carregando usuários...
           </div>
         </ng-container>
 
-        <!-- Sem resultados -->
         <ng-container *ngIf="users.length > 0 && displayedUsers.length === 0">
           <div class="p-8 text-center text-amber-700 bg-amber-50 rounded-xl border border-amber-200">
             Nenhum usuário encontrado para a busca "{{ searchTerm }}"
           </div>
         </ng-container>
 
-        <!-- Tabela -->
         <ng-container *ngIf="displayedUsers.length > 0">
           <div class="flex flex-col overflow-hidden rounded-xl border border-[#dbdfe6] bg-white shadow-sm">
             <div class="overflow-x-auto">
@@ -79,9 +72,6 @@
                   <tr *ngFor="let user of displayedUsers" class="group hover:bg-[#f8f9fa] transition-colors">
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="flex items-center gap-3">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" 
-                             [style.background-image]="'url(' + (user.profileImage || 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=150') + ')'">
-                        </div>
                         <div class="flex flex-col">
                           <span class="text-[#111318] text-sm font-bold">{{ user.name || 'Sem nome' }}</span>
                           <span class="text-[#616f89] text-sm">{{ user.email || 'Sem email' }}</span>
@@ -114,7 +104,6 @@
           </div>
         </ng-container>
 
-        <!-- Rodapé -->
         <div class="flex items-center justify-between p-4 bg-white rounded-xl border border-[#dbdfe6] shadow-sm text-sm text-[#616f89]">
           <div class="hidden sm:block">
             Mostrando <strong>{{ displayedUsers.length }}</strong> de <strong>{{ users.length }}</strong> usuários

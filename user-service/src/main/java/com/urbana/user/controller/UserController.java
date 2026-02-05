@@ -2,6 +2,7 @@ package com.urbana.user.controller;
 
 import com.urbana.user.dto.UserCreateDTO;
 import com.urbana.user.dto.UserDTO;
+import com.urbana.user.dto.UserUpdateDTO;
 import com.urbana.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,8 +41,8 @@ public class UserController {
 
     @Operation(summary = "Alterar/atualizar um usuário existente")
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
-        UserDTO updatedUser = userService.updateUser(id, userDTO);
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserUpdateDTO updateDTO) {
+        UserDTO updatedUser = userService.updateUser(id, updateDTO);
         return updatedUser != null ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
     }
 

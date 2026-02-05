@@ -12,7 +12,7 @@ import { KeycloakService } from 'keycloak-angular';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MatIconModule],
   templateUrl: './user-form.html',
-  styleUrls: ['./user-form.css']
+  styleUrls: ['./user-form.css'],
 })
 export class UserFormComponent implements OnInit {
   private fb = inject(FormBuilder);
@@ -24,17 +24,19 @@ export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   isEdit = false;
   userId?: number;
+  isAdmin = false;
 
   constructor() {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],  
-      roles: [['USER']]  
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      roles: [['USER']],
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.isAdmin = await this.keycloak.isUserInRole('ADMIN');
     this.userId = +this.route.snapshot.paramMap.get('id')!;
     if (this.userId) {
       this.isEdit = true;
@@ -45,23 +47,28 @@ export class UserFormComponent implements OnInit {
   }
 
   loadUser(): void {
-    this.userService.getUserById(this.userId!).subscribe(user => {
+    this.userService.getUserById(this.userId!).subscribe((user) => {
       this.userForm.patchValue({
         name: user.name,
         email: user.email,
-        roles: user.roles || ['USER']
+        roles: user.roles || ['USER'],
       });
     });
   }
 
   saveUser(): void {
     if (this.userForm.valid) {
-      const userData = this.userForm.value;
+      let userData = this.userForm.value;
+
+      if (!this.isAdmin) {
+        delete userData.roles;
+      }
+
+      if (this.isEdit && (!userData.password || userData.password.trim() === '')) {
+        delete userData.password;
+      }
 
       if (this.isEdit) {
-        if (!userData.password) {
-          delete userData.password;
-        }
         this.userService.updateUser(this.userId!, userData).subscribe(() => {
           this.router.navigate(['/users']);
         });
