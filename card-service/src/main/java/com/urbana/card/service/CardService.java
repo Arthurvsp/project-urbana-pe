@@ -43,16 +43,6 @@ public class CardService {
         return dto;
     }
 
-    private Card convertToEntity(CardDTO dto) {
-        Card card = new Card();
-        card.setId(dto.getId());
-        card.setCardNumber(dto.getCardNumber());
-        card.setName(dto.getName());
-        card.setStatus(dto.isStatus());
-        card.setCardType(CardType.valueOf(dto.getCardType()));
-        return card;
-    }
-
     private Card convertToEntity(CardCreateDTO dto) {
         Card card = new Card();
         card.setCardNumber(dto.getCardNumber());

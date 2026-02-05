@@ -9,7 +9,7 @@ import com.urbana.user.repository.RoleRepository;
 import com.urbana.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -30,7 +30,8 @@ public class UserService {
     @Autowired
     private CardClient cardClient;
 
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream()
@@ -44,19 +45,16 @@ public class UserService {
     }
 
     public UserDTO createUser(UserCreateDTO createDTO) {
-        // Cria o novo usuário (sem nenhuma validação de permissão)
         User user = new User();
         user.setName(createDTO.getName());
         user.setEmail(createDTO.getEmail());
         user.setPassword(passwordEncoder.encode(createDTO.getPassword()));
 
-        // Roles solicitadas (ou default USER)
         List<String> requestedRoles = createDTO.getRoles();
         if (requestedRoles == null || requestedRoles.isEmpty()) {
             requestedRoles = List.of("USER");
         }
 
-        // Processa as roles
         List<Role> roles = new ArrayList<>();
         for (String roleName : requestedRoles) {
             Role role = roleRepository.findByName(roleName);
@@ -69,7 +67,6 @@ public class UserService {
         }
         user.setRoles(roles);
 
-        // Salva e retorna DTO
         User savedUser = userRepository.save(user);
         return convertToDTO(savedUser);
     }
@@ -80,9 +77,6 @@ public class UserService {
             User user = optionalUser.get();
             user.setName(userDTO.getName());
             user.setEmail(userDTO.getEmail());
-            if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
-                user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            }
             User updatedUser = userRepository.save(user);
             return convertToDTO(updatedUser);
         }
@@ -102,7 +96,7 @@ public class UserService {
         try {
             dto.setCards(cardClient.getCardsByUserId(user.getId()));
         } catch (Exception e) {
-            dto.setCards(new ArrayList<>());  // Fallback se CARD down
+            dto.setCards(new ArrayList<>());
         }
         return dto;
     }
@@ -120,7 +114,6 @@ public class UserService {
         }
     }
 
-    // Novo: Remover cardNumber da lista do user
     public void removeCardFromUser(Long userId, Long cardNumber) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {

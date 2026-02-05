@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { CardService } from '../../services/card';
 import { UserService } from '../../services/user';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-card-management',
@@ -19,6 +20,7 @@ export class CardManagementComponent implements OnInit {
   private userService = inject(UserService);
   private cardService = inject(CardService);
   public router = inject(Router);
+  private keycloak = inject(KeycloakService);
   userId: number;
   user: any;
   cards: any[] = [];
@@ -76,5 +78,9 @@ export class CardManagementComponent implements OnInit {
 
   saveChanges(): void {
     this.router.navigate(['/users']);
+  }
+
+  logout(): void {
+    this.keycloak.logout();
   }
 }

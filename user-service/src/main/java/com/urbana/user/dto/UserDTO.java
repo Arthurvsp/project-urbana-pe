@@ -15,9 +15,6 @@ public class UserDTO {
     @Schema(description = "Email do usuário", example = "teste@example.com", required = true)
     private String email;
 
-    @Schema(description = "Senha do usuário (opcional para updates)", example = "123")
-    private String password;
-
     private List<String> roles;
 
     private List<CardDTO> cards;
@@ -52,14 +49,6 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public List<CardDTO> getCards() {

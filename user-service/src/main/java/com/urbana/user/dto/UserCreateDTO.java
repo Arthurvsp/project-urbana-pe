@@ -12,13 +12,12 @@ public class UserCreateDTO {
     @Schema(description = "Email do usuário", example = "arthur@example.com", required = true)
     private String email;
 
-    @Schema(description = "Senha do usuário", example = "senhaSegura123", required = true)
+    @Schema(description = "Senha do usuário", example = "123456", required = true)
     private String password;
 
     @Schema(description = "Lista de roles para o usuário (ex: ['ADMIN', 'USER']). Default: ['USER']", example = "[\"USER\"]")
     private List<String> roles;
 
-    // Getters e Setters
     public String getName() {
         return name;
     }

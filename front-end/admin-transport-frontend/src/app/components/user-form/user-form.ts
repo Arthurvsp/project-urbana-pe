@@ -1,4 +1,3 @@
-// user-form.ts (adicionado Validators.required para password no create, e roles default)
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { UserService } from '../../services/user';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-user-form',
@@ -19,17 +19,18 @@ export class UserFormComponent implements OnInit {
   private userService = inject(UserService);
   public route = inject(ActivatedRoute);
   public router = inject(Router);
+  private keycloak = inject(KeycloakService);
+
   userForm: FormGroup;
   isEdit = false;
   userId?: number;
-  showPassword = false;
 
   constructor() {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.minLength(8)]],  // ← Required será adicionado dinamicamente no ngOnInit
-      roles: [['USER']]  // ← Default para novo usuário
+      password: ['', [Validators.required, Validators.minLength(6)]],  
+      roles: [['USER']]  
     });
   }
 
@@ -38,24 +39,26 @@ export class UserFormComponent implements OnInit {
     if (this.userId) {
       this.isEdit = true;
       this.loadUser();
-    } else {
-      // Para create, tornar password required
-      this.userForm.get('password')?.addValidators(Validators.required);
+      this.userForm.get('password')?.clearValidators();
       this.userForm.get('password')?.updateValueAndValidity();
     }
   }
 
   loadUser(): void {
     this.userService.getUserById(this.userId!).subscribe(user => {
-      this.userForm.patchValue(user);
+      this.userForm.patchValue({
+        name: user.name,
+        email: user.email,
+        roles: user.roles || ['USER']
+      });
     });
   }
 
   saveUser(): void {
     if (this.userForm.valid) {
       const userData = this.userForm.value;
+
       if (this.isEdit) {
-        // Para update, remover password se vazio
         if (!userData.password) {
           delete userData.password;
         }
@@ -67,8 +70,6 @@ export class UserFormComponent implements OnInit {
           this.router.navigate(['/users']);
         });
       }
-    } else {
-      console.log('Form inválido:', this.userForm.errors);  // ← Para debug, remova depois
     }
   }
 
@@ -76,7 +77,7 @@ export class UserFormComponent implements OnInit {
     this.router.navigate(['/users']);
   }
 
-  togglePassword(): void {
-    this.showPassword = !this.showPassword;
+  logout(): void {
+    this.keycloak.logout();
   }
 }
