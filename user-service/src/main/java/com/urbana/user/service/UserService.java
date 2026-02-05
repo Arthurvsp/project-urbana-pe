@@ -59,7 +59,6 @@ public class UserService {
     }
 
     public UserDTO createUser(UserCreateDTO createDTO) {
-        // Criar usuário no Keycloak
         RealmResource realmResource = keycloakAdmin.realm(targetRealm);
         UserRepresentation userRep = new UserRepresentation();
         userRep.setUsername(createDTO.getEmail());
@@ -73,17 +72,14 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao criar usuário no Keycloak: " + response.getStatusInfo().getReasonPhrase());
         }
 
-        // Extrair ID do usuário criado no Keycloak (do Location header)
         String keycloakUserId = response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
 
-        // Definir senha no Keycloak
         CredentialRepresentation credential = new CredentialRepresentation();
         credential.setTemporary(false);
         credential.setType(CredentialRepresentation.PASSWORD);
         credential.setValue(createDTO.getPassword());
         realmResource.users().get(keycloakUserId).resetPassword(credential);
 
-        // Atribuir roles no Keycloak
         List<String> requestedRoles = createDTO.getRoles();
         if (requestedRoles == null || requestedRoles.isEmpty()) {
             requestedRoles = List.of("USER");
@@ -93,7 +89,6 @@ public class UserService {
             realmResource.users().get(keycloakUserId).roles().realmLevel().add(List.of(roleRep));
         }
 
-        // Agora, salvar no banco local da mesma forma que antes, incluindo password encoded, mais keycloak_id
         User user = new User();
         user.setName(createDTO.getName());
         user.setEmail(createDTO.getEmail());
@@ -162,7 +157,7 @@ public class UserService {
                         RoleRepresentation roleRep = realm.roles().get(roleName).toRepresentation();
                         realm.users().get(keycloakId).roles().realmLevel().add(List.of(roleRep));
                     }
-                    
+
                     List<Role> newRoles = new ArrayList<>();
                     for (String roleName : updateDTO.getRoles()) {
                         Role role = roleRepository.findByName(roleName);
@@ -187,7 +182,6 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            // Deletar do Keycloak
             if (user.getKeycloakId() != null) {
                 RealmResource realmResource = keycloakAdmin.realm(targetRealm);
                 realmResource.users().get(user.getKeycloakId()).remove();

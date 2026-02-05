@@ -1,7 +1,5 @@
 version: "3.8"
-
 services:
-
   postgres:
     image: postgres:17
     container_name: postgres-urbana
@@ -51,10 +49,8 @@ services:
       KC_DB_URL: jdbc:postgresql://postgres-keycloak:5432/keycloak
       KC_DB_USERNAME: keycloak
       KC_DB_PASSWORD: keycloak
-
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME: localhost
       KC_HOSTNAME_STRICT: "false"
@@ -116,6 +112,21 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  frontend:
+    image: node:20-alpine
+    container_name: frontend
+    working_dir: /app
+    volumes:
+      - ./front-end/admin-transport-frontend:/app
+    command: sh -c "npm install && npx ng serve --host 0.0.0.0 --poll 2000"
+    ports:
+      - "4200:4200"
+    depends_on:
+      - keycloak
+      - user
+      - card
+
 
 volumes:
   postgres_data:
